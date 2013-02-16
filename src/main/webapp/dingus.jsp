@@ -1,23 +1,6 @@
-<%@ page language="java" import="org.markdownj.MarkdownProcessor" pageEncoding="utf-8" %>
-<%
-    MarkdownProcessor mp = new MarkdownProcessor();
-    String markup = request.getParameter("markdown");
-    String view = request.getParameter("view");
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-    // determine the view to show
-    boolean showSource  = true;
-    boolean showPreview = true;
-
-    if (view != null) {
-      if ("source".equals(view)) {
-        showSource  = true;
-        showPreview = false;
-      } else if ("preview".equals(view)) {
-        showSource  = false;
-        showPreview = true;
-      }; // otherwise, default to showing both
-    }
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -346,10 +329,10 @@ Violets are blue.
 </div> <!-- sidebar -->
 
 <div id="app">
-<form method="POST">
+<form action="/" method="POST">
 <div>
 <p class="label">Markdown Source:</p>
-<textarea rows="25" cols="80" style="font-family: Monaco, ProFont, monospace; font-size: 10px;" name="markdown"><%= markup == null ? "" : markup %></textarea>
+<textarea rows="25" cols="80" style="font-family: Monaco, ProFont, monospace; font-size: 10px;" name="markdown">${markup}</textarea>
 
 <div id="buttonrow">
 <div style="float:left">
@@ -360,10 +343,20 @@ Filter:&nbsp;<select name="filter" style="font-size: 11px; margin-right: 2em;">
 <option value='both'>Both</option>
 </select>
 --%>
-Results:&nbsp;<select name="view" style="font-size: 11px; margin-right: 2em;">
-<option value='source'>Source</option>
-<option value='preview'>Preview</option>
-<option value='both' selected='selected'>Source &amp; Preview</option>
+Results:&nbsp;
+<c:set var="viewLabels" value="${fn:split('Source,Preview,Source &amp; Preview',',')}"/>
+<select name="view" style="font-size: 11px; margin-right: 2em;">
+  <c:forEach items="source,preview,both" var="view" varStatus="i">
+    <c:set var="viewLabel" value="${viewLabels[i.count - 1]}"/>
+    <c:choose>
+      <c:when test="${param.view == view}">
+        <option value='${view}' selected="selected">${viewLabel}</option>
+      </c:when>
+      <c:otherwise>
+        <option value='${view}'>${viewLabel}</option>
+      </c:otherwise>
+    </c:choose>
+  </c:forEach>
 </select>
 </div>
 
@@ -373,30 +366,26 @@ Results:&nbsp;<select name="view" style="font-size: 11px; margin-right: 2em;">
 </div>
 </form>
 
-<% if (markup != null) {
-    String html = mp.markdown(markup);
-    //java.io.FileWriter log = new java.io.FileWriter("/home/www/markdown/log/" + System.currentTimeMillis() + ".log");
-    //log.write(markup);
-    //log.close();
-%>
-  <% if(showSource) { %>
-  <p class="label">HTML Source:</p>
-  <div>
-  <textarea name="xhtml" rows="25" cols="80" readonly="readonly" style="font-family: Monaco, ProFont, monospace; font-size: 10px;"><%= html %></textarea>
-  </div>
-  <% } %>
-  <% if(showPreview) { %>
-  <p class="label">HTML Preview:</p>
-  <div class="renderbox"><%= html %></div>
-  <% } %>
-<% } %>
+<c:if test="${not empty markup}">
+  <c:if test="${showSource}">
+    <p class="label">HTML Source:</p>
+    <div>
+      <textarea name="xhtml" rows="25" cols="80" readonly="readonly" style="font-family: Monaco, ProFont, monospace; font-size: 10px;">${html}</textarea>
+    </div>
+  </c:if>
+
+  <c:if test="${showPreview}">
+    <p class="label">HTML Preview:</p>
+    <div class="renderbox">${html}</div>
+  </c:if>
+</c:if>
 
 <%
-java.util.Calendar now = java.util.Calendar.getInstance();
-int year = now.get(java.util.Calendar.YEAR);
+  java.util.Calendar now = java.util.Calendar.getInstance();
+  int year = now.get(java.util.Calendar.YEAR);
 %>
 <p class='footer'>MarkdownJ 0.3.0 (compatible with Markdown 1.0.2b2)<br />
-  Markdown and the Markdown Dingus are copyright &copy; 2004–<%= year %> John Gruber.
+  Markdown and the Markdown Dingus are copyright &copy; 2004 <%= year %> John Gruber.
   Used with permission.</p>
 
 </div> <!-- app -->
