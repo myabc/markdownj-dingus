@@ -6,7 +6,7 @@
     <artifactId>dingus</artifactId>
     <name>MarkdownJ Web Dingus</name>
     <version>0.4-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
