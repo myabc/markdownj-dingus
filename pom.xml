@@ -2,21 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.markdownj</groupId>
-        <artifactId>markdownj</artifactId>
-        <version>0.4-SNAPSHOT</version>
-    </parent>
-
-    <artifactId>www</artifactId>
-    <packaging>war</packaging>
+    <groupId>org.markdownj</groupId>
+    <artifactId>dingus</artifactId>
     <name>MarkdownJ Web Dingus</name>
+    <version>0.4-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>${project.parent.artifactId}-core</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>org.markdownj</groupId>
+            <artifactId>markdownj-core</artifactId>
+            <version>0.4-SNAPSHOT</version>
         </dependency>
 
         <!-- Servlet API -->
