@@ -14,9 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>${pom.parent.groupId}</groupId>
-            <artifactId>${pom.parent.artifactId}-core</artifactId>
-            <version>${pom.parent.version}</version>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>${project.parent.artifactId}-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- Servlet API -->
