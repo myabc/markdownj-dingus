@@ -70,9 +70,6 @@
     <profiles>
         <profile>
             <id>gae</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>heroku</id>
@@ -83,6 +80,9 @@
                     <version>2.1.v20100127</version>
                 </dependency>
             </dependencies>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 
