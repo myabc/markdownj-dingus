@@ -5,7 +5,7 @@ markdownj-dingus
 
 First build with:
 
-    $ mvn clean install
+    $ mvn clean install -P heroku
 
 Then run it with:
 
