@@ -384,7 +384,7 @@ Results:&nbsp;
   java.util.Calendar now = java.util.Calendar.getInstance();
   int year = now.get(java.util.Calendar.YEAR);
 %>
-<p class='footer'>MarkdownJ 0.3.0 (compatible with Markdown 1.0.2b2)<br />
+<p class='footer'>MarkdownJ 0.4.0 (compatible with Markdown 1.0.2b2)<br />
   Markdown and the Markdown Dingus are copyright &copy; 2004 <%= year %> John Gruber.
   Used with permission.</p>
 
